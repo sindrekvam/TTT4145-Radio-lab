@@ -1,0 +1,13 @@
+[build-system]
+requires = ["scikit-build-core", "pybind11"]
+build-backend = "scikit_build_core.build"
+
+[project]
+name = "radiolab"
+version = "0.1.0"
+
+[tool.scikit-build]
+cmake.source-dir = ".."
+cmake.args = ["-DBUILD_PYTHON_BINDINGS=ON"]
+cmake.build-type = "Release"
+install.components = ["python"]
