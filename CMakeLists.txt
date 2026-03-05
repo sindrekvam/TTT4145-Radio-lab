@@ -6,6 +6,7 @@ project(RadioLab)
 # GoogleTest requires at least C++17
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 include(FetchContent)
 
@@ -28,6 +29,14 @@ FetchContent_MakeAvailable(matplotplusplus)
 # Qt for real-time plotting
 find_package(Qt5 COMPONENTS Widgets PrintSupport REQUIRED)
 
+option(BUILD_PYTHON_BINDINGS "Build pybind11 python bindings" OFF)
+if (BUILD_PYTHON_BINDINGS)
+    find_package(Python3 COMPONENTS Interpreter Development)
+    find_package(pybind11 REQUIRED HINTS "${Python3_SITELIB}")
+
+    pybind11_add_module(radio src/modem/modem.cpp)
+    target_compile_definitions(radio PRIVATE PYBIND11=1)
+endif()
 
 # ---------- Applications ----------
 # TX

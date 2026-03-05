@@ -155,3 +155,24 @@ std::ostream &operator<<(std::ostream &os, Modem &modem) {
 //     }
 
 // }
+
+#ifdef PYBIND11
+
+#include <pybind11/complex.h>
+#include <pybind11/pybind11.h>
+
+namespace py = pybind11;
+
+PYBIND11_MODULE(radio, m, py::mod_gil_not_used()) {
+
+    m.doc() = "Generate a QAM modem";
+
+    py::class_<QAM>(m, "Qam")
+        .def(py::init<const int &>())
+        .def("modulate", &QAM::modulate,
+             "Modulate an integer to a symbol, the symbol is complex")
+        .def("demodulate", &QAM::demodulate,
+             "Demodulates a complex symbol to a integer value");
+}
+
+#endif // PYBIND11

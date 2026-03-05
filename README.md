@@ -13,7 +13,7 @@ Generate documentaion by running the following command while in the root directo
 
 On debian based linux distros, install the following dependencies:
 ```
-sudo apt install gnuplot libiio-dev libiio-utils qtbase5-dev
+sudo apt install gnuplot libiio-dev libiio-utils qtbase5-dev python3-dev
 ```
 
 ## Building and testing
