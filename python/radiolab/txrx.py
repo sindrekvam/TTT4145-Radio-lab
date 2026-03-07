@@ -194,10 +194,10 @@ def main():
     print(f"Decoded data: {decoded_data}")
 
     fig, ax = plt.subplots(2, 1)
-    ax[0].imshow(np.reshape(data, (img_height, img_width)), label="Transmitted image")
-    ax[1].imshow(
-        np.reshape(decoded_data, (img_height, img_width)), label="Received image"
-    )
+    ax[0].set_title("Transmitted image")
+    ax[0].imshow(np.reshape(data, (img_height, img_width)))
+    ax[0].set_title("Received image")
+    ax[1].imshow(np.reshape(decoded_data, (img_height, img_width)))
 
     plt.show()
 
