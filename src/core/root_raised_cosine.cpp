@@ -12,11 +12,12 @@
 /**
  * \param beta The roll-off factor.
  * \param span The length of the filter in symbols.
- * \param sps The symbol rate.
+ * \param sps Samples per symbol
  **/
 RootRaisedCosine::RootRaisedCosine(float beta, int span, int sps)
     : Fir(span * sps + 1) {
 
+    // Symbol-time spacing
     double T_s = 1.0 / sps;
 
     for (std::uint16_t i = 0; i < num_taps; ++i) {
@@ -62,8 +63,8 @@ RootRaisedCosine::~RootRaisedCosine() {}
 
 #ifdef PYBIND11
 
-#include <pybind11/stl.h>
 #include <pybind11/pybind11.h>
+#include <pybind11/stl.h>
 
 namespace py = pybind11;
 
