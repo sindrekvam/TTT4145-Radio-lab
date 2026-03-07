@@ -74,7 +74,7 @@ if __name__ == "__main__":
 
         closest_symbol = QPSK_demod(x)
 
-        e[i] = np.angle(x * np.conj(closest_symbol))
+        e[i] = np.imag(x * np.conj(closest_symbol))
 
         state.integrator = state.integrator + parameters.k_i * e[i]
         state.theta += state.integrator + parameters.k_p * e[i]
