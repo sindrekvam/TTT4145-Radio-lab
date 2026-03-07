@@ -4,6 +4,8 @@ build
 Testing
 .cache
 
+pytest-output
+
 # Compiled applications
 *.exe
 *.out
