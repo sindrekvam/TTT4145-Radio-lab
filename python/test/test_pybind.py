@@ -49,11 +49,11 @@ def test_matched_filter(beta, span, sps):
 @pytest.mark.parametrize("span", [2, 10])
 @pytest.mark.parametrize("sps", [4, 8, 16])
 @pytest.mark.parametrize("mode", ["full", "same"])
-def test_matched_filter_filtering(span, sps, mode):
-    qam = modem.Qam(4)
+def test_matched_filter_filtering(span, sps, mode, beta: float = 0.2, mqam: int = 4):
+    qam = modem.Qam(mqam)
 
     # Create data
-    data = np.random.randint(4, size=50)
+    data = np.random.randint(mqam, size=50)
 
     modulated_data = np.zeros_like(data, dtype=complex)
     for idx, value in enumerate(data):
@@ -62,7 +62,7 @@ def test_matched_filter_filtering(span, sps, mode):
     oversampled_data = np.zeros((len(data) * sps,), dtype=complex)
     oversampled_data[::sps] = modulated_data
 
-    rrc = fir_filter.RootRaisedCosine(0.2, span, sps)
+    rrc = fir_filter.RootRaisedCosine(beta, span, sps)
     rrc_coeff = np.array(rrc.get_coefficients())
 
     pulse_shaped = np.convolve(oversampled_data, rrc_coeff, mode=mode)
@@ -92,7 +92,8 @@ def test_matched_filter_filtering(span, sps, mode):
     imag_ax.plot(matched_filter.imag, label="Match filtered data")
 
     fig.suptitle(
-        f"Transmitted data before and after pulse shaping filter\n$\\beta = 0.2$, span = {span}, sps = {sps}"
+        "Transmitted data before and after pulse shaping filter\n"
+        + "$\\beta = {beta}$, span = {span}, sps = {sps}"
     )
 
     real_ax.legend()
