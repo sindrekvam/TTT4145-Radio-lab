@@ -29,6 +29,7 @@ class Modem {
      * **/
     std::uint16_t demodulate(std::complex<float> number_to_demodulate);
 
+    std::vector<std::complex<float>> get_lookup_table() { return LUT; }
     // prints the current look up table in order for debugging
     void print_LUT();
     friend std::ostream &operator<<(std::ostream &os, Modem &modem);

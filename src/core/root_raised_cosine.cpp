@@ -59,3 +59,24 @@ RootRaisedCosine::RootRaisedCosine(float beta, int span, int sps)
 }
 
 RootRaisedCosine::~RootRaisedCosine() {}
+
+#ifdef PYBIND11
+
+#include <pybind11/stl.h>
+#include <pybind11/pybind11.h>
+
+namespace py = pybind11;
+
+PYBIND11_MODULE(fir_filter, m, py::mod_gil_not_used()) {
+
+    m.doc() = "Generate Root Raised Cosine filter";
+
+    py::class_<RootRaisedCosine>(m, "RootRaisedCosine")
+        .def(py::init<float, int, int>())
+        .def("get_coefficients", &RootRaisedCosine::get_coefficients,
+             "Get the generated Root Raised Cosine filter coefficients")
+        .def("filter", &RootRaisedCosine::filter,
+             "Perform filtering using convolution");
+}
+
+#endif // PYBIND11

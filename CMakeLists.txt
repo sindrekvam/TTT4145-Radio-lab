@@ -14,15 +14,20 @@ if(BUILD_PYTHON_BINDINGS)
     find_package(Python3 COMPONENTS Interpreter Development REQUIRED)
     find_package(pybind11 REQUIRED HINTS "${Python3_SITELIB}")
 
-    pybind11_add_module(radio
+    pybind11_add_module(modem
         src/modem/modem.cpp
+    )
+    pybind11_add_module(fir_filter
         src/core/fir.cpp
         src/core/root_raised_cosine.cpp
     )
-    target_compile_definitions(radio PRIVATE PYBIND11=1)
-    target_include_directories(radio PRIVATE include src)
+    target_compile_definitions(modem PRIVATE PYBIND11=1)
+    target_compile_definitions(fir_filter PRIVATE PYBIND11=1)
+    target_include_directories(modem PRIVATE include src)
+    target_include_directories(fir_filter PRIVATE include src)
 
-    install(TARGETS radio LIBRARY DESTINATION . COMPONENT python)
+    install(TARGETS modem LIBRARY DESTINATION . COMPONENT python)
+    install(TARGETS fir_filter LIBRARY DESTINATION . COMPONENT python)
 
 # ---------- Native build (cmake ..) ----------
 else()
