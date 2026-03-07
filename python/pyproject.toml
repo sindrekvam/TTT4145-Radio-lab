@@ -5,6 +5,7 @@ build-backend = "scikit_build_core.build"
 [project]
 name = "radiolab"
 version = "0.1.0"
+dependencies = ["pyadi-iio==0.0.20"]
 
 [tool.scikit-build]
 cmake.source-dir = ".."
